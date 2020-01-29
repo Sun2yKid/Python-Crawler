@@ -61,5 +61,7 @@ if __name__ == '__main__':
         for film in films_info:
             rank += 1
             f.write('[%02d. %s](%s)\n\n' % (rank, film['name'], film['href']))
-            f.write('%s\n\n' % film['roles'])
+            f.write('%s...\n\n' % film['roles'].split('...')[0])
+            if len(film['roles'].split('...')) > 1:
+                f.write('%s\n\n' % film['roles'].split('...')[1])
             f.write('![%s](%s)\n\n' % (film['name'], film['src']))

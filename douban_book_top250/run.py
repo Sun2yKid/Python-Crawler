@@ -52,7 +52,7 @@ if __name__ == '__main__':
 
     books_info = []
 
-    for url in [base_url]:
+    for url in all_pages:
         print('url', url)
         fetch_page_and_parse(url)
 
@@ -62,4 +62,5 @@ if __name__ == '__main__':
             rank += 1
             f.write('[%d. %s](%s)\n\n' % (rank, book['name'], book['href']))
             f.write('%s\n\n' % book['author'])
-            f.write('![%s](%s){:height="343px" width="231px"}\n\n' % (book['name'], book['src']))
+            f.write('<img src="%s" alt="%s" height="343px" width="231px"/>\n\n' % (book['src'], book['name']))
+            # f.write('![%s](%s)\n\n' % (book['name'], book['src']))
