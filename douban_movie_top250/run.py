@@ -33,7 +33,8 @@ def fetch_page_and_parse(url):
                 name = a_tag[i].img.get('alt')
                 href = a_tag[i].get('href')
                 src = a_tag[i].img.get('src')
-                films_info.append(dict(name=name, href=href, src=src))
+                roles = a_tag[i].find_next("p")
+                films_info.append(dict(name=name, href=href, src=src, roles=' '.join(roles.text.split())))
         else:
             print('status_code', r.status_code)
     except RequestException as e:
@@ -43,12 +44,13 @@ def fetch_page_and_parse(url):
 
 
 if __name__ == '__main__':
-    url = 'https://movie.douban.com/top250'
+    # url = 'https://movie.douban.com/top250'
+    # fetch_page(url)
+
     base_url = 'https://movie.douban.com/top250'
     all_pages = [base_url + '?start=%d' % (i*25) for i in range(10)]
 
     films_info = []
-    # fetch_page(url)
 
     for url in all_pages:
         print('url', url)
@@ -59,4 +61,5 @@ if __name__ == '__main__':
         for film in films_info:
             rank += 1
             f.write('[%02d. %s](%s)\n\n' % (rank, film['name'], film['href']))
+            f.write('%s\n\n' % film['roles'])
             f.write('![%s](%s)\n\n' % (film['name'], film['src']))
